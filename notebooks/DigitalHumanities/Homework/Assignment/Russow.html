@@ -363,14 +363,14 @@
 <body>
     <div class="notebook-container">
         <div class="cell cell-code">
-            <div class="cell-prompt input-prompt">In [2]:</div>
+            <div class="cell-prompt input-prompt">In [3]:</div>
             <div class="cell-content">
                 <div class="input-area"><pre>import pandas as pd
 df = pd.read_csv("Russow.csv")
-df.head() # Show the first few rows</pre></div>
+df.head() </pre></div>
                 <div class="output-area">
                     <div class="output-wrapper">
-                        <div class="cell-prompt output-prompt">Out[2]:</div>
+                        <div class="cell-prompt output-prompt">Out[3]:</div>
                         <div class="output-content">
                             <div class="output-html"><div>
 <style scoped>
@@ -449,11 +449,11 @@ df.head() # Show the first few rows</pre></div>
         <div class="cell cell-markdown">
             <div class="cell-prompt prompt-empty">&nbsp;</div>
             <div class="cell-content">
-                <div class="markdown-cell">The dataset originates from the following article, Erki Russow. Tallinna lätted. – Tuna, 2019, 2, 10–26, pp. 22, 24, 26. I extracted a table from the article to Notepad++, where I used regex to clean it.	<br>I used two notepads for this - one to isolate numbers, one to isolate the location.  I experimented with my own knowledge, week 2's spreadsheet, and google searches.	<br>To separate the location, I used a simple search to delete everything after a specific keyword. This was done so I could easily copy paste the locations over and make generalisations for the dataset. Example with the word highway: in the search bar (highway).* -> replaced with \1 .	<br>Since every presented entry were in the AI repository (Archaeological Research Centre at TLU), I simply dragged the blue circle down the cells. 	<br>	<br>For numbers I used the search  .*\) that I then replaced with \1.  This meant I retained only the numbers as wanted. Every hyphen were later changed to 0.	<br>Eventually I searched \s+ and replaced it with \t in order to place everything in one consecutive row. After this I copied the row over to the spreadsheet. Since I could not find nor think of a search to automate this, I just pasted them to the respective cells. 	<br>	<br>The headings (PAFF, ORNPGLK, PROTO) originate from the legend prior to the tables. These are the types of ceramics & ware imported to Estonia and neighbouring regions - signs of colonialism in Tallinn. The table itself refers to the suburbs of medieval Tallinn, i.e Toompea. (Russow, 2019, pp. 22, 24, 26)	                                            <br>PAFF - Paffrath type pots;	<br>ORNPGLK - Ornamented red glazed pottery;	<br>PROTO - Proto-stoneware.</div>
+                <div class="markdown-cell">The dataset originates from the following article: Erki Russow. Tallinna lätted. – Tuna, 2019, 2, 10–26, pp. 22, 24, 26. I cleaned the chosen dataset (table) with regex commands that I then added to a spreadsheet before saving it as a csv file.<br>I specifically used the following expressions: <br><code></code>`python<br>^(.+?) \((\w+) .+?\) (\d+|-) (\d+|-) (\d+|-) <br><code></code>`<br>Here I extracted $1\n, $2\n, etc, because I wanted to simplify pasting data over to the spreadsheet.<br><code></code>`python<br>^([a-zA-Z õäöü\-]+).*? <br><code></code>`<br>With this I could get both the location column ($1) separate from the rest of the dataset and avoid irrelevant information. In other words, for this dataset I found adding specific addresses to be excessive, hence removing them. I additionally chose to translate the location names except Vabaduse Väljak to English. Sakala and Tatari I combined into one for convenience's sake.<br><br>These expressions were created thanks to the help of a good friend of mine, who studies IT in Germany. Every part of the expression were explained to me thoroughly before use. Furthermore, I refrained from blatantly copy-pasting her work. As a result I experimented with the expressions in regex101 before implementing them to homework.<br><br>The headings (PAFF, ORNPGLK, PROTO) originate from the legend prior to the tables. These are the types of ceramics & ware imported to Estonia and neighbouring regions that are signs of colonialism 13th century colonialism. The table itself refers to the suburbs of medieval Tallinn, i.e what lied beyond Toompea and the city walls. (Russow, 2019, pp. 22, 24, 26)	                                            <br>PAFF - Paffrath type pots;	<br>ORNPGLK - Ornamented red glazed pottery;	<br>PROTO - Proto-stoneware.</div>
             </div>
         </div>
         <div class="cell cell-code">
-            <div class="cell-prompt input-prompt">In [3]:</div>
+            <div class="cell-prompt input-prompt">In [4]:</div>
             <div class="cell-content">
                 <div class="input-area"><pre>import matplotlib.pyplot as plt 
 df.plot(kind="bar",x="Location",y="PROTO", legend=False)
@@ -478,7 +478,7 @@ plt.show()</pre></div>
             </div>
         </div>
         <div class="cell cell-code">
-            <div class="cell-prompt input-prompt">In [4]:</div>
+            <div class="cell-prompt input-prompt">In [5]:</div>
             <div class="cell-content">
                 <div class="input-area"><pre>sum_PROTO=df.groupby("Location")["PROTO"].sum()
 sum_PROTO.plot(kind="bar")
@@ -498,7 +498,7 @@ plt.show()</pre></div>
         <div class="cell cell-markdown">
             <div class="cell-prompt prompt-empty">&nbsp;</div>
             <div class="cell-content">
-                <div class="markdown-cell">Over 120 proto-stoneware finds were present around St. John's almshouse. This indicates that the almshouse, which function was to support those in need (the ill for example), needed to utilise a wide range of ware in order to accommodate large amounts of people. Not to mention the religious purpouse behind it - in Estonian it's known as Jaani Seek (St. John's sect). Thus this statistic furthermore illustrates that churches and similiar institutes could have prioritized preserving such ware more than the local peasants. Pärnu Highway, Roosikrantsi and Vabaduse Väljak, however, suggest that the outskirts of the main centre, Toompea, and churches etc. were just as important.</div>
+                <div class="markdown-cell">Over 120 proto-stoneware finds were present around St. John's almshouse. This indicates that the almshouse, which function was to support those in need (the ill for example), needed to utilise a wide range of ware in order to accommodate large amounts of people. Not to mention the religious purpouse behind it, the almshouse is known as a sect in Estonian. Perhaps the clergy prioritised preservance of such items more than local peasants? Pärnu Highway, Roosikrantsi and Vabaduse Väljak, however, suggest that the outskirts of the main centre, Toompea, and churches etc. were just as important for such ware.</div>
             </div>
         </div>
         <div class="cell cell-markdown">
@@ -508,7 +508,7 @@ plt.show()</pre></div>
             </div>
         </div>
         <div class="cell cell-code">
-            <div class="cell-prompt input-prompt">In [5]:</div>
+            <div class="cell-prompt input-prompt">In [6]:</div>
             <div class="cell-content">
                 <div class="input-area"><pre>import matplotlib.pyplot as plt
 plt.scatter(df["Location"], df["ORNPGLK"],s=df["ORNPGLK"]*60, alpha=0.67) 
@@ -530,7 +530,7 @@ plt.show()</pre></div>
         <div class="cell cell-markdown">
             <div class="cell-prompt prompt-empty">&nbsp;</div>
             <div class="cell-content">
-                <div class="markdown-cell">Once more St. John's almshouse leads for presumably the same reasons. Deriven from the name (ornamented, glazed), perhaps the clergy used such pottery to create an atmosphere closer to "heaven". Churches are after all bountiful with the smell of incense, artpieces and so on. A person who would go to an almshouse in this case could technically feel closer to God and feel healed better. Perhaps there existed a grain of greed aswell amongst the clergy, wanting to attain more aristocratic power. Interestingly the only entry to have more than three specific archaelogical finds is Roosikrantsi, which again alludes to the theory that Tallinn could have had a settlement around that region. Why else would there be an abundance of finds there once the colonists arrived?</div>
+                <div class="markdown-cell">Once more St. John's almshouse leads for presumably the same reasons. Deriven from the name (ornamented, glazed), perhaps the clergy used such pottery to create an atmosphere closer to "heaven". Churches are after all bountiful with the smell of incense, artpieces and so on. A person who would go to an almshouse in this case could technically feel closer to God and feel healed better. Mayhap there existed a grain of greed aswell amongst the clergy, wanting to attain more aristocratic power. Interestingly the only entry to have more than three specific archaelogical finds is Roosikrantsi, which again alludes to the theory that Tallinn could have had a settlement around that region. Why else would there be an abundance of finds there once the colonists arrived?</div>
             </div>
         </div>
         <div class="cell cell-markdown">
@@ -540,7 +540,7 @@ plt.show()</pre></div>
             </div>
         </div>
         <div class="cell cell-code">
-            <div class="cell-prompt input-prompt">In [6]:</div>
+            <div class="cell-prompt input-prompt">In [ ]:</div>
             <div class="cell-content">
                 <div class="input-area"><pre>avg_paff=df.groupby("Location")["PAFF"].mean()
 avg_paff.plot(kind="pie", autopct="%1.1f%%", legend=False)
@@ -560,11 +560,11 @@ plt.show()</pre></div>
         <div class="cell cell-markdown">
             <div class="cell-prompt prompt-empty">&nbsp;</div>
             <div class="cell-content">
-                <div class="markdown-cell">When the previous two analysed ornaments seemed to be found most in the almhouse, then Paffrath type ceramics, on average, were found more in Vabaduse väljak - but why? It lied outside city walls, effectivelly a suburb-like area. Perhaps the sea-level and medieval Estonian terrain were vastly different from the present-day. This could mean that merchants and travellers alike erected trade-posts, or other similiar buildings in-front of the city walls. This could have been encouraged, mayhap forced, by the elite, in order to let the Tallinn suburbs blossom.</div>
+                <div class="markdown-cell">When the previous two analysed ornaments seemed to be found most in the almhouse, then Paffrath type ceramics, on average, were found more in Vabaduse väljak - but why? We know it was a suburban area. The sea-level and topography of Tallinn were likely to have been vastly different from the present. This could mean that merchants and travellers alike erected trade-posts, or other similiar buildings in-front of the city walls. This could have possibly garnered attention and even be eventually encouraged by the elite.</div>
             </div>
         </div>
         <div class="cell cell-code">
-            <div class="cell-prompt input-prompt">In [29]:</div>
+            <div class="cell-prompt input-prompt">In [ ]:</div>
             <div class="cell-content">
                 <div class="input-area"><pre>import matplotlib.pyplot as plt
 import seaborn as sns
@@ -587,7 +587,7 @@ plt.show()</pre></div>
         <div class="cell cell-markdown">
             <div class="cell-prompt prompt-empty">&nbsp;</div>
             <div class="cell-content">
-                <div class="markdown-cell">This boxplot chart shows three things:<br>1) There have been barely any paffrath-type finds in Tallinn suburbs. <br>2) Eventhough there do exist concrete outliers, ornamented red glazed pottery have also relatively little finds.<br>3) Proto-stoneware is the most common type of ceramic here, and there are more outliers. They dwarf the rest of the statistics.                                                                                                                                                 <br>Therefore the results could illustrate that stone, atleast in materialistic culture, started becoming more popular. Additionally, given that all of these ceramics stemmed from the 13th century (Russow, 2019, p. 24), then one could say the colonisers helped cultivate Tallinn as a "true city", not just a random settlement located at a convenient area within the Baltic Sea. </div>
+                <div class="markdown-cell">This boxplot chart shows three things:<br>1) There have been barely any paffrath-type finds in Tallinn suburbs. <br>2) Eventhough there do exist concrete outliers, ornamented red glazed pottery have also relatively little finds.<br>3) Proto-stoneware is the most common type of ceramic here, and there are more outliers. They dwarf the rest of the statistics.      <br><br><br>Therefore, results from all of the charts, not only from the boxplot, illustrate that stone within materialistic culture at least started to amass popularity. Additionally, given that all of these ceramics stemmed from the 13th century (Russow, 2019, p. 24), then one could say that the colonisers in fact helped Tallinn develop in the right direction, instead of hypothetically letting it suffer a similiar fate to its sister fortification Iru.</div>
             </div>
         </div>
     </div>
